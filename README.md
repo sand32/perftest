@@ -1,6 +1,11 @@
 # perftest
 This project is meant to compare Node.js and ASP.NET Core in a more real-world scenario where they must implement a modern REST API (C# must use reflection to do this, in my experience) and handle JSON serialization.
 
+# Test System
+Intel(R) Core(TM) i5-5250U CPU @ 1.60GHz
+16GB DDR3 @ 1600MHz
+Ubuntu 16.04 LTS 64-bit
+
 # Results
 These results were gathered using [wrk](https://github.com/wg/wrk).
 
