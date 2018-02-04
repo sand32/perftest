@@ -1,0 +1,10 @@
+{
+    "name": "perftest",
+    "dependencies": {
+        "express": "latest",
+        "lodash": "latest"
+    },
+    "scripts": {
+        "start": "node app.js"
+    }
+}
