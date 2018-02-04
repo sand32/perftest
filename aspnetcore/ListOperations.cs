@@ -65,9 +65,10 @@ namespace aspnetcore
         {
             if(search == null) return list;
             PropertyInfo[] properties = typeof(T).GetProperties();
-            foreach(var property in properties.Where(p => search.ContainsKey(p.Name)))
+            foreach(var property in properties.Where(p => search.Any(s => s.Key.Equals(p.Name, StringComparison.CurrentCultureIgnoreCase))))
             {
-                var searchValues = search[property.Name].Split(',');
+                var searchTerm = search.First(s => s.Key.Equals(property.Name, StringComparison.CurrentCultureIgnoreCase)).Value;
+                var searchValues = searchTerm.Split(',');
                 if(property.PropertyType == typeof(string))
                 {
                     list = list.Where(m => searchValues.Any(value => property.GetValue(m).ToString().StartsWith(value))).ToList();
@@ -93,7 +94,10 @@ namespace aspnetcore
                 selection = filter.Fields.Split(",", StringSplitOptions.RemoveEmptyEntries);
             }
 
-            selectedProperties = selectedProperties.Where(x => selection.Any(y => y.Equals(x.Name, StringComparison.CurrentCultureIgnoreCase))).ToArray();
+            selectedProperties = selectedProperties.Where(x => selection.Any(y =>
+                y.Equals(x.Name, StringComparison.CurrentCultureIgnoreCase))
+                || x.Name == "Id"
+            ).ToArray();
             var result = new List<object>();
             foreach(T element in list)
             {
