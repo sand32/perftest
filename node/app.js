@@ -60,11 +60,11 @@ var express = require("express")
             });
         }else{
             let fields = _.split(req.query.fields, ",").map(_.trim);
-            req.fields = _.intersection(fields, resourceFields);
+            fields = _.intersection(fields, _.keys(resourceFields));
             return _.map(data, item => {
                 let id = item._id;
                 item = _.omitBy(item, (value, key) => {
-                    return _.startsWith(key, "_") || !_.includes(req.fields, key);
+                    return _.startsWith(key, "_") || !_.includes(fields, key);
                 });
                 item._href = currentDomain(req) + collectionPath + "/" + id
                 return item;
